@@ -38,3 +38,29 @@ function greet(name: string) {
 // add(1, 2);
 // add(1, "a");
 // add(1);
+
+function log(message: string, userID?: string) {
+  const time = new Date().toLocaleTimeString();
+  console.log(time, message, userID || "Not signed in");
+}
+
+log("Page Loaded");
+log("User signed in ", "da763a");
+
+function log2(message: string, userID = "Not signed in") {
+  const time = new Date().toLocaleTimeString();
+  console.log(time, message, userID);
+}
+
+type Context = {
+  appID?: string;
+  UserID?: string;
+};
+
+function log3(message: string, context: Context = {}) {
+  const time = new Date().toLocaleTimeString();
+  console.log("Log3", time, message, context.UserID);
+}
+
+log3("Page Loaded");
+log3("User signed in ", { UserID: "da763a" });
