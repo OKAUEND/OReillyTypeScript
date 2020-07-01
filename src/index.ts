@@ -25,3 +25,16 @@ const mySedLang = Language["English"];
 
 const h = null;
 console.log(h);
+false;
+
+function add(a: number, b: number) {
+  return a + b;
+}
+
+function greet(name: string) {
+  return "Hello" + name;
+}
+
+// add(1, 2);
+// add(1, "a");
+// add(1);
