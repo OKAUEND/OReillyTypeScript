@@ -173,3 +173,33 @@ type TimeEvent<T> = {
   to: Date;
 };
 // type ButtonEvent = MyEvent<HTMLButtonElement>;
+
+function triggerEvent<T>(event: MyEvent<T>): void {
+  console.log(event);
+}
+
+type TreeNode = {
+  value: string;
+};
+
+type LeafNode = TreeNode & {
+  isLeaf: true;
+};
+
+type InnerNode = TreeNode & {
+  children: [TreeNode] | [TreeNode, TreeNode];
+};
+
+const LeafA: TreeNode = { value: "a" };
+const LeafB: LeafNode = { value: "b", isLeaf: true };
+const LeafC: InnerNode = { value: "c", children: [LeafB] };
+
+const A1 = mapNode(LeafA, _ => _.toUpperCase());
+const B1 = mapNode(LeafB, _ => _.toUpperCase());
+const C1 = mapNode(LeafC, _ => _.toUpperCase());
+
+const D1 = mapNode({}, ["A"]);
+
+function mapNode<T extends TreeNode>(node: T, f: (value: string) => string): T {
+  return { ...node, value: f(node.value) };
+}
