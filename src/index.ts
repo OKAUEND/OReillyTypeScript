@@ -96,22 +96,22 @@ function times(f: (index: number) => void, n: number) {
 
 times(n => console.log(n), 4);
 
-type Reserve = {
-  (from: Date, to: Date, destination: string): Reservation;
-  (from: Date, destination: string): Reservation;
-};
+// type Reserve = {
+//   (from: Date, to: Date, destination: string): Reservation;
+//   (from: Date, destination: string): Reservation;
+// };
 
-const reserve: Reserve = (
-  from: Date,
-  toOrDestination: Date | string,
-  destination?: string
-) => {
-  if (toOrDestination instanceof Date && destination !== undefined) {
-    //ほげー
-  } else if (typeof toOrDestination === "string") {
-    //ふごー
-  }
-};
+// const reserve: Reserve = (
+//   from: Date,
+//   toOrDestination: Date | string,
+//   destination?: string
+// ) => {
+//   if (toOrDestination instanceof Date && destination !== undefined) {
+//     //ほげー
+//   } else if (typeof toOrDestination === "string") {
+//     //ふごー
+//   }
+// };
 
 // createElement<K extends keyof HTMLElementTagNameMap>(tagname:K):HTMLElementTagNameMap[K];
 // createElement(tagname:string):HTMLElement;
@@ -198,8 +198,39 @@ const A1 = mapNode(LeafA, _ => _.toUpperCase());
 const B1 = mapNode(LeafB, _ => _.toUpperCase());
 const C1 = mapNode(LeafC, _ => _.toUpperCase());
 
-const D1 = mapNode({}, ["A"]);
+// const D1 = mapNode({}, ["A"]);
 
 function mapNode<T extends TreeNode>(node: T, f: (value: string) => string): T {
   return { ...node, value: f(node.value) };
 }
+
+//制限付きポリモーフィズム
+
+type hasSides = { numberOfSides: number };
+type SideHavelength = { sideLength: number };
+
+function logPreimeter<Shape extends hasSides & SideHavelength>(
+  s: Shape
+): Shape {
+  console.log(`正方形の。${s.numberOfSides * s.sideLength}`);
+  return s;
+}
+
+type Square = hasSides & SideHavelength;
+const square: Square = { numberOfSides: 7, sideLength: 3 };
+logPreimeter(square);
+
+function call<T extends unknown[], R>(f: (...args: T) => R, ...args: T): R {
+  return f(...args);
+}
+
+function fill(length: number, value: string): string[] {
+  return Array.from({ length }, () => value);
+}
+
+console.log(call(fill, 10, "a"));
+
+// type MyEvent2<T = HTMLElement> = {
+//   target: T;
+//   type: string;
+// };

@@ -5,7 +5,8 @@
     "outDir": "Dist",
     "sourceMap": true,
     "strict": true,
-    "target": "ES2015"
+    "target": "ES2015",
+    "strictPropertyInitialization": true
   },
   "include": ["src"]
 }
