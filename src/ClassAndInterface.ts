@@ -41,35 +41,35 @@ class King extends Piece {
     return distance.rank < 2 && distance.file < 2;
   }
 }
-class Queen extends Piece {}
-class Bishop extends Piece {}
-class Knight extends Piece {}
-class Rook extends Piece {}
-class Pawn extends Piece {}
+// class Queen extends Piece {}
+// class Bishop extends Piece {}
+// class Knight extends Piece {}
+// class Rook extends Piece {}
+// class Pawn extends Piece {}
 
-const set = new Set();
-set.add(1).add(2).add(3);
-set.has(2);
-set.has(4);
+// const set = new Set();
+// set.add(1).add(2).add(3);
+// set.has(2);
+// set.has(4);
 
-class Set {
-  has(value: number): boolean {}
-  add(value: number): Set {}
-}
+// class Set {
+//   has(value: number): boolean {}
+//   add(value: number): Set {}
+// }
 
-class MutableSet extends Set {
-  delete(value: number): boolean {}
-  add(value: number): MutableSet {}
-}
+// class MutableSet extends Set {
+//   delete(value: number): boolean {}
+//   add(value: number): MutableSet {}
+// }
 
-class Set2 {
-  has(value: number): boolean {}
-  add(value: number): this {}
-}
+// class Set2 {
+//   has(value: number): boolean {}
+//   add(value: number): this {}
+// }
 
-class MutableSet2 extends Set2 {
-  delete(value: number): boolean {}
-}
+// class MutableSet2 extends Set2 {
+//   delete(value: number): boolean {}
+// }
 
 type Sushi = {
   calories: number;
@@ -137,13 +137,13 @@ type B = A & {
 // }
 
 //インターフェイスでジェネリックを宣言し、尚且2つをマージさせる場合は、ジェネリックの同じ方法(型もしくは型エイリアスなどで)で宣言しないといけない
-interface User<Age extends string> {
-  age: Age;
-}
+// interface User<Age extends string> {
+//   age: Age;
+// }
 
-interface User<Age extends number> {
-  age: Age;
-}
+// interface User<Age extends number> {
+//   age: Age;
+// }
 
 interface Animal {
   readonly name: string;
@@ -151,20 +151,105 @@ interface Animal {
   sleep(hours: number): void;
 }
 
-class Cat implements Animal {
-  eat(food: string) {
-    console.log("Ate some", food, ",Mmm!!");
+// class Cat implements Animal {
+//   eat(food: string) {
+//     console.log("Ate some", food, ",Mmm!!");
+//   }
+
+//   sleep(hours: number) {
+//     console.info("Sleep for ", hours, "hours");
+//   }
+// }
+
+// interface Feline {
+//   meow(): void;
+// }
+
+// class Cat2 implements Animal, Feline {
+//   name = "YOSHIDA";
+//   eat(food: string) {
+//     console.info("Cat! Ate some ", food, ". Mmm!!");
+//   }
+
+//   sleep(hours: number) {
+//     console.info("Cat! Sleep for ", hours, "hours");
+//   }
+
+//   meow() {
+//     console.info("Mmeoww!");
+//   }
+// }
+
+// class Aa1 {
+//   private x = 1;
+// }
+
+// class Bb1 extends Aa1 {}
+
+// function f(a: Aa1);
+
+// f(new Aa1());
+// f(new Bb1());
+
+// f({ x: 1 });
+
+class C {}
+const c: C = new C();
+
+enum E {
+  F,
+  G
+}
+const e: E = E.F;
+
+type State = {
+  [Key: string]: string;
+};
+
+class StringDatabase {
+  constructor(public state: State = {}) {}
+  // state: State = {};
+  get(key: string): string | null {
+    return key in this.state ? this.state[key] : null;
+  }
+  set(key: string, value: string): void {
+    this.state[key] = value;
   }
 
-  sleep(hours: number) {
-    console.info("Sleep for ", hours, "hours");
+  static from(state: State) {
+    const db = new StringDatabase();
+    for (const key in state) {
+      db.set(key, state[key]);
+    }
+    return db;
   }
 }
 
-interface Feline {
-  meow(): void;
+interface StringDatabase {
+  state: State;
+  get(key: string): string | null;
+  set(key: string, value: string): void;
 }
 
-class Cat2 implements Animal, Feline {
-  name = "YOSHIDA";
+interface StringDatabaseConstructor {
+  new (state?: State): StringDatabase;
+  from(state: State): StringDatabase;
 }
+
+class MyMap<K, V> {
+  constructor(initKey: K, initValue: V) {}
+  get(key: K): V {}
+  set(key: K, value: V): void {}
+  merge<K1, V1>(map: MyMap<K1, V1>): MyMap<K | K1, V | V1> {}
+  static of<K, V>(k: K, v: V): MyMap<K, V> {}
+}
+interface MyMap<K, V> {
+  get(key: K): V;
+  set(key: K, Value: V): void;
+}
+
+const a = new MyMap<string, number>("K", 1);
+const b = new MyMap("K", true);
+
+console.log(a.get("K"));
+console.log(b.set("K", false));
